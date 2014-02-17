@@ -1,0 +1,349 @@
+# Asus Apps Installer
+set_progress(0.00);
+ui_print("Thank you for installing Asus Apps for JB 4.3!");
+ui_print("Sit back and relax...");
+ui_print("-----------------------------------------------------");
+ui_print("This will take a few minutes!");
+
+show_progress(0.99, 700);
+set_progress(0.01);
+ui_print("Preparing File System...");
+mount("ext4", "EMMC", "/dev/block/platform/sdhci-tegra.3/by-name/APP", "/system");
+
+set_progress(0.15);
+if
+    file_getprop("/tmp/aroma-data/wipe.prop","selected") == "1"
+then
+    ui_print("Wiping Dalvik Cache.....");
+    delete_recursive("/data/dalvik-cache");
+endif;
+ui_print("Wiping Cache.....");
+delete_recursive("/cache");
+
+set_progress(0.30);
+set_progress(0.50);
+#-- Asus Apps --#
+ui_print("");
+ui_print("Asus Apps");
+ui_print("Widgets");
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.1.1") == "1"
+then
+	ui_print(" + Asus Desk Clock & Widget");
+	delete("/system/app/DeskClock.odex");
+    package_extract_dir("asus/adeskclock", "/system");
+else
+	ui_print(" - Asus Desk Clock & Widget");
+	delete("/system/app/DeskClock.apk");
+	delete("/system/app/DeskClock.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.1.2") == "1"
+then
+	ui_print(" + Asus Weather & Time Widget");
+	delete("/system/app/WeatherTime.odex");
+    package_extract_dir("asus/weather", "/system");
+else
+	ui_print(" - Asus Weather & Time Widget");
+	delete("/system/app/WeatherTime.apk");
+	delete("/system/app/WeatherTime.odex");
+endif;
+
+set_progress(0.60);
+ui_print("Productivity");
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.2.1") == "1"
+then
+	ui_print(" + Asus Email");
+	delete("/system/app/AsusEmail.odex");
+    package_extract_dir("asus/email", "/system");
+else
+	ui_print(" - Asus Email");
+	delete("/system/app/AsusEmail.apk");
+	delete("/system/app/AsusEmail.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.2.2") == "1"
+then
+	ui_print(" + Asus SuperNote");
+	delete("/system/app/Supernote.odex");
+    package_extract_dir("asus/supernote", "/system");
+else
+	ui_print(" - Asus SuperNote");
+	delete("/system/app/Supernote.apk");
+	delete("/system/app/Supernote.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.2.3") == "1"
+then
+	ui_print(" + Asus MyDictionary");
+	delete("/system/app/Dictionary.odex");
+	delete("/system/app/MyDictionary.odex");
+    package_extract_dir("asus/mydictionary", "/system");
+else
+	ui_print(" - Asus MyDictionary");
+	delete("/system/app/Dictionary.apk");
+	delete("/system/app/MyDictionary.odex");
+	delete("/system/app/Dictionary.apk");
+	delete("/system/app/MyDictionary.odex");
+	delete("/system/etc/dict");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.2.4") == "1"
+then
+	ui_print(" + Asus Task");
+	delete("/system/app/AsusTask.odex");
+    package_extract_dir("asus/task", "/system");
+else
+	ui_print(" - Asus Task");
+	delete("/system/app/AsusTask.apk");
+	delete("/system/app/AsusTask.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.2.5") == "1"
+then
+	ui_print(" + Asus Calendar");
+	delete("/system/app/AsusCalendar.odex");
+	delete("/system/app/GoogleCalendarSyncAdapter.odex");
+    package_extract_dir("asus/mydictionary", "/system");
+else
+	ui_print(" - Asus Calendar");
+	delete("/system/app/AsusCalendar.apk");
+	delete("/system/app/AsusCalendar.odex");
+	delete("/system/app/GoogleCalendarSyncAdapter.apk");
+	delete("/system/app/GoogleCalendarSyncAdapter.odex");
+	
+endif;
+
+set_progress(0.70);
+ui_print("Tools");
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.3.1") == "1"
+then
+	ui_print(" + Asus Keyboard");
+	delete("/system/app/XT9IME.odex");
+    package_extract_dir("asus/keyboard", "/system");
+else
+	ui_print(" - Asus Keyboard");
+	delete("/system/app/XT9IME.apk");
+	delete("/system/app/XT9IME.odex");
+	delete("/system/lib/libjni_xt9input.so");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.3.2") == "1"
+then
+	ui_print(" + Asus File Manager");
+	delete("/system/app/FileManager2.odex");
+    package_extract_dir("asus/stockfm", "/system");
+else
+	ui_print(" - Asus File Manager");
+	delete("/system/app/FileManager2.apk");
+	delete("/system/app/FileManager2.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.3.3") == "1"
+then
+	ui_print(" + Asus Battery Widget");
+	delete("/system/app/BatteryWidget.odex");
+    package_extract_dir("asus/battery", "/system");
+else
+	ui_print(" - Asus Battery Widget");
+	delete("/system/app/BatteryWidget.apk");
+	delete("/system/app/BatteryWidget.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.3.4") == "1"
+then
+	ui_print(" + Asus Taskmanager");
+	delete("/system/app/TaskManager.odex");
+    package_extract_dir("asus/taskmanager", "/system");
+else
+	ui_print(" - Asus Taskmanager");
+	delete("/system/app/TaskManager.apk");
+	delete("/system/app/TaskManager.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.3.5") == "1"
+then
+	ui_print(" + Asus Splendid");
+	delete("/system/app/AsusSplendid.odex");
+	delete("/system/app/SplendidCommandAgent.odex");
+    package_extract_dir("asus/splendid", "/system");
+else
+	ui_print(" - Asus Splendid");
+	delete("/system/app/AsusSplendid.apk");
+	delete("/system/app/AsusSplendid.odex");
+	delete("/system/app/SplendidCommandAgent.apk");
+	delete("/system/app/SplendidCommandAgent.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.3.6") == "1"
+then
+	ui_print(" + Asus App Back Up");
+	delete("/system/app/DataBackup.odex");
+    package_extract_dir("asus/appback", "/system");
+else
+	ui_print(" - Asus App Back Up");
+	delete("/system/app/DataBackup.apk");
+	delete("/system/app/DataBackup.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.3.7") == "1"
+then
+	ui_print(" + Asus App Locker");
+	delete("/system/app/AppLocker.odex");
+    package_extract_dir("asus/applock", "/system");
+else
+	ui_print(" - Asus App Locker");
+	delete("/system/app/AppLocker.apk");
+	delete("/system/app/AppLocker.odex");
+endif;
+
+set_progress(0.80);
+ui_print("Media");
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.4.1") == "1"
+then
+	ui_print(" + Asus MyLibrary Reader");
+	delete("/system/app/AsusReader.odex");
+    package_extract_dir("asus/mylibrary", "/system");
+else
+	ui_print(" - Asus MyLibrary Reader");
+	delete("/system/app/AsusReader.apk");
+	delete("/system/app/AsusReader.odex");
+	delete("/system/lib/libereader.so");
+	delete("/system/fonts/AdobeFonts");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.4.2") == "1"
+then
+	ui_print(" + Asus Video Editor Movie Studio");
+	delete("/system/app/VideoEditor.odex");
+    package_extract_dir("asus/videoeditor", "/system");
+else
+	ui_print(" - Asus Video Editor Movie Studio");
+	delete("/system/app/VideoEditor.apk");
+	delete("/system/app/VideoEditor.odex");
+	delete("/system/lib/libvideoeditor_core.so");
+	delete("/system/lib/libvideoeditor_jni.so");
+	delete("/system/lib/libvideoeditor_osal.so");
+	delete("/system/lib/libvideoeditor_videofilters.so");
+	delete("/system/lib/libvideoeditorplayer.so");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.4.3") == "1"
+then
+	ui_print(" + Asus Miracast");
+	delete("/system/app/AMDFirmwareUpgradeTool.odex");
+    package_extract_dir("asus/miracast", "/system");
+else
+	ui_print(" - Asus Miracast");
+	delete("/system/app/AMDFirmwareUpgradeTool.apk");
+	delete("/system/app/AMDFirmwareUpgradeTool.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.4.4") == "1"
+then
+	ui_print(" + Asus AOLink");
+	delete("/system/app/AOLink.odex");
+    package_extract_dir("asus/aolink", "/system");
+else
+	ui_print(" - Asus AOLink");
+	delete("/system/app/AOLink.apk");
+	delete("/system/app/AOLink.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.4.5") == "1"
+then
+	ui_print(" + Asus Studio");
+	delete("/system/app/ASUSStudio.odex");
+	delete("/system/app/ASUSStudioNet.odex");
+    package_extract_dir("asus/studio", "/system");
+else
+	ui_print(" - Asus Studio");
+	delete("/system/app/ASUSStudio.apk");
+	delete("/system/app/ASUSStudio.odex");
+	delete("/system/app/ASUSStudioNet.apk");
+	delete("/system/app/ASUSStudioNet.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.4.6") == "1"
+then
+	ui_print(" + Asus Story");
+	delete("/system/app/AsusStory.odex");
+    package_extract_dir("asus/story", "/system");
+else
+	ui_print(" - Asus Story");
+	delete("/system/app/AsusStory.apk");
+	delete("/system/app/AsusStory.odex");
+endif;
+
+set_progress(0.90);
+ui_print("Other");
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.5.1") == "1"
+then
+	ui_print(" + Asus MyFrame");
+	delete("/system/app/MyFrame.odex");
+    package_extract_dir("asus/myframe", "/system");
+else
+	ui_print(" - Asus MyFrame");
+	delete("/system/app/MyFrame.apk");
+	delete("/system/app/MyFrame.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.5.2") == "1"
+then
+	ui_print(" + Asus Live Wallpapers");
+	delete("/system/app/AsusDayScene.odex");
+	delete("/system/app/MyWater.odex");
+	delete("/system/app/MyWater2.odex");
+    package_extract_dir("asus/livewall", "/system");
+else
+	ui_print(" - Asus Live Wallpapers");
+	delete("/system/app/AsusDayScene.apk");
+	delete("/system/app/AsusDayScene.odex");
+	delete("/system/app/MyWater.apk");
+	delete("/system/app/MyWater.odex");
+	delete("/system/app/MyWater2.apk");
+	delete("/system/app/MyWater2.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.5.3") == "1"
+then
+	ui_print(" + Asus Parental Control");
+	delete("/system/app/ParentalLock.odex");
+    package_extract_dir("asus/parentlock", "/system");
+else
+	ui_print(" - Asus Parental Control");
+	delete("/system/app/ParentalLock.apk");
+	delete("/system/app/ParentalLock.odex");
+endif;
+if
+    file_getprop("/tmp/aroma-data/asus.prop","item.5.4") == "1"
+then
+	ui_print(" + Asus Web Storage");
+	delete("/system/app/AWS.odex");
+    package_extract_dir("asus/webstorage", "/system");
+else
+	ui_print(" - Asus Web Storage");
+	delete("/system/app/AWS.apk");
+	delete("/system/app/AWS.odex");
+endif;
+
+set_progress(0.98);
+#Set Permissions#
+ui_print("");
+ui_print("Setting Permissions");
+set_perm_recursive(0, 0, 0755, 0644, "/system/app");
+set_perm_recursive(0, 0, 0755, 0644, "/system/lib");
+
+ui_print("Finalising Install");
+set_progress(0.99);
+unmount("/system");
+set_progress(1.0);
+ui_print("---------------------------------------");
+ui_print("All Done!");
+ui_print("Dont forget to follow @sbdags on Twitter");
+ui_print("If you like it please donate to sbdags@gmail.com on paypal");
+ui_print("Enjoy Asus Apps!");

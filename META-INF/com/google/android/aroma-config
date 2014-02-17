@@ -1,0 +1,161 @@
+﻿##
+# AROMA Installer 2.70 - AROMA Installer Configuration
+#       (c) 2011-2012 by Ahmad Amarullah
+#           amarullz - xda-developers
+#           http://www.amarullz.com/
+#
+#       Binary Version  : 2.70B
+#       Binary Codename : Flamboyan
+##
+#ini_set("force_colorspace","bgra");
+
+#ini_set("force_colorspace","argb");
+
+# Forcing Device Pixelate Size
+# default: floor( min( width, height ) / 160 )
+#
+# Usefull for tablet device, if interface was too big, you can
+# force dp size for smaller UI size.
+#
+ini_set("dp","5");
+#
+
+theme("cromix");
+ini_set("rom_name",              "Asus Apps Installer / Remover");
+ini_set("rom_version",           "1.0");
+ini_set("rom_author",            "sbdags");
+ini_set("rom_device",            "Asus Transformer TF701T");
+ini_set("rom_date",              "16/02/2014");
+
+splash(
+   3000,
+   "splash"
+);
+
+fontresload( "0", "ttf/Roboto-Regular.ttf;ttf/DroidSansFallback.ttf;", "11" );
+fontresload( "1", "ttf/Roboto-Regular.ttf;ttf/DroidSansFallback.ttf;", "12" );
+
+viewbox(
+    "Welcome",
+    "You are about to flash <b>"+
+	  ini_get("rom_name")+
+	"</b> for the <b>"+sysprop("ro.product.model")+"</b>.\n\n"+
+    
+      "VERSION\t\t\t: <b><#selectbg_g>"+ini_get("rom_version")+"</#></b>\n"+
+      "AUTHOR \t\t\t: <b><#selectbg_g>"+ini_get("rom_author")+"</#></b>\n"+
+	  "DEVICES \t\t\t: <b><#selectbg_g>"+ini_get("rom_device")+"</#></b>\n"+
+      "RELEASED\t\t: <b><#selectbg_g>"+ini_get("rom_date")+"</#></b>\n\n\n"+
+	  
+	  "MODEL\t\t\t: <b><#selectbg_g>"+sysprop("ro.product.model")+"</#></b>\n"+
+      "NAME\t\t\t: <b><#selectbg_g>"+sysprop("ro.product.name")+"</#></b>\n"+
+      "DEVICE\t\t\t: <b><#selectbg_g>"+sysprop("ro.product.device")+"</#></b>\n"+
+      "BOARD\t\t\t: <b><#selectbg_g>"+sysprop("ro.product.board")+"</#></b>\n"+
+      "MANUFACTURER\t: <b><#selectbg_g>"+sysprop("ro.product.manufacturer")+"</#></b>\n"+
+      "CPU\t\t\t\t: <b><#selectbg_g>"+sysprop("ro.product.cpu.abi")+"</#></b>\n\n"+
+      "SYSTEM Size\t\t: <b><#selectbg_g>"+getdisksize("/system","m")+" MB</#></b>\n"+
+        "\tFree\t\t\t: <b><#selectbg_g>"+getdiskfree("/system","m")+" MB</#></b>\n\n"+
+      "DATA Size\t\t: <b><#selectbg_g>"+getdisksize("/data","m")+" MB</#></b>\n"+
+        "\tFree\t\t\t: <b><#selectbg_g>"+getdiskfree("/data","m")+" MB</#></b>\n\n"+
+      "SDCARD Size\t\t: <b><#selectbg_g>"+getdisksize("/storage/sdcard1","m")+" MB</#></b>\n"+
+        "\tFree\t\t\t: <b><#selectbg_g>"+getdiskfree("/storage/sdcard1","m")+" MB</#></b>\n\n"+
+	
+    "Press <b>Next</b> to Continue the Installation...\n",
+    "@welcome"
+);
+
+textbox(
+  "Changelog Info",
+  "Changelog",
+  "@update",
+  resread("changelog.txt")
+);
+
+#Flash Options
+menubox(
+  "Pre-Flash Options",
+  "Please select:",
+  "@confirm",
+  "wipe.prop",
+  "Install with Wipe of Dalvik Cache and Cache","RECOMMENDED","@update",
+  "Install with Wipe of only Cache","","@alert",
+  "Exit Back to Recovery","","@welcome"
+
+);
+
+if
+    file_getprop("/tmp/aroma-data/wipe.prop","selected") == "3"
+then
+    exit("");
+endif;
+
+checkbox(
+  "Asus Apps - Scroll down to see all",
+  "Checked = INSTALL / Unchecked = UNINSTALL",
+  "@apps",
+  "asus.prop",
+  
+  "<b><#selectbg_g>WIDGETS</#></b>","","2",
+  "Asus Desk Clock & Widget","",0,
+  "Asus Weather & Time Widget","",0,
+
+  "<b><#selectbg_g>PRODUCTIVITY</#></b>","","2",
+  "Asus Email","",0,
+  "Asus SuperNote","Hand Note Taking App",0,
+  "Asus MyDictionary","Dictionary Files for Asus Apps",0,
+  "Asus Tasks","Productivity Task Manager",0,
+  "Asus Calendar","Will over-write Google Calendar if installed",0,
+
+  "<b><#selectbg_g>TOOLS</#></b>","","2",
+  "Asus Keyboard","Modded Dark Theme",0,
+  "Asus File Manager","",0,
+  "Asus Battery Widget","",0,
+  "Asus Taskmanager Widget","Close Apps Currently Running",0,
+  "Asus Splendid","Screen Colour Settings",0,
+  "Asus App Back Up","Backup / Restore Apps and Data",0,
+  "Asus App Locker","Set Password for Opening Apps",0,
+
+  "<b><#selectbg_g>MEDIA APPS</#></b>","","2",
+  "Asus MyLibrary","Book / PDF Reader",0,
+  "Asus Movie Studio","View, Edit, Share, and Categorize Videos",0,
+  "Asus Miracast","Requires Miracast Equipped Device",0,
+  "Asus AOLink","Share Media with Other Devices",0,
+  "Asus Studio","View, Edit, Share, and Categorize Photos",0,
+  "Asus Story","Group Photos into One Story",0,
+
+  "<b><#selectbg_g>MISCELLANEOUS APPS</#></b>","","2",
+  "Asus MyFrame","Display Picture(s) as a Wallpaper",0,
+  "Asus Live Wallpapers","MyWater, MyWater2, Asus Dayscene",0,
+  "Asus Parental Lock","Lock Internet Content",0,
+  "Asus Web Storage","Asus Cloud Based Storage",0
+
+);
+
+ini_set("text_next", "Install now");
+
+viewbox(
+  "Ready to install",
+  "You are now ready to begin installation.\n\n"+
+  "Press <b>Install now</b> to start.\n\n"+
+  "If you want to review or change any of your installation settings, press <b>Back</b>.",
+  "@install"
+  
+);
+
+ini_set("text_next", "Next");
+
+install(
+  "Installing",
+  "Installing CROMi-Xenogenesis...\nPlease Wait until it Finishes...",
+  "@install"
+  
+);
+ini_set("text_next", "Finish");
+
+viewbox(
+  "Installation Completed",
+  "<b><#selectbg_g>Congratulations...</#></b>\n\n"+
+  "Asus Apps have been installed successfully.\n\n"+
+  "Press Finish, Reboot and Inherit!\n\nEnjoy your tablet!",
+  "@info"
+  
+);
